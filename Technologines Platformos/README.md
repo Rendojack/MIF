@@ -1,4 +1,4 @@
-# Java EE library
+# Java EE "Library"
 
 ### Setup
 * Project is based on **Maven** 
