@@ -3,7 +3,7 @@
 ### Setup
 * Project is based on **Maven** 
 * Konfigūracija skirta **TomEE** application serveriui
-* DB dialect - **MYSQL**, db init failas - `src/main/resources/dbDDL.sql`
+* DB dialect - **MYSQL**, db init failas - `src/main/resources/db.sql`
 * DB connection settings - `src/main/webapp/WEB-INF/resources.xml`
 
 ### Demonstracijos
