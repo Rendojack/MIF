@@ -1,0 +1,9 @@
+<?mybatis version="1.0" encoding="UTF-8"?>
+<tomee>
+    <Resource id="mysqlDataResource" type="DataSource">
+        JdbcDriver = com.mysql.jdbc.Driver
+        JdbcUrl = jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7237949
+        UserName = sql7237949
+        Password = aYi4A1f9tH
+    </Resource>
+</tomee>

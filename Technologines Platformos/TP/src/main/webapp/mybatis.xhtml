@@ -1,0 +1,118 @@
+<?mybatis version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="css/styles.css" />
+        <title>The Library</title>
+    </h:head>
+
+    <h:body>
+        <div align="center">
+            <h1>The Library (MyBatis transactions)</h1>
+            <h:form>
+                <p:fieldset legend="Students" toggleable="true" style="width: 50%">
+                    <p:dataTable id="studentsDataTableId" value="#{requestControllerMyBatis.allStudents}" var="student">
+                        <p:column headerText="First name">
+                            <h:outputText value="#{student.firstName}" />
+                        </p:column>
+                        <p:column headerText="Last name">
+                            <h:outputText value="#{student.lastName}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:separator />
+
+                    <p:commandButton value="Add new"
+                                     type="button"
+                                     onclick="PF('addNewStudent').show();"/>
+                </p:fieldset>
+
+                <br/>
+
+                <p:fieldset legend="Books" toggleable="true" style="width: 50%">
+                    <p:dataTable id="booksDataTableId" value="#{requestControllerMyBatis.allBooks}" var="book">
+                        <p:column headerText="Title">
+                            <h:outputText value="#{book.title}" />
+                        </p:column>
+                        <p:column headerText="Description">
+                            <h:outputText value="#{book.description}" />
+                        </p:column>
+                        <p:column headerText="Student">
+                            <h:outputText value="#{book.student.firstName} #{book.student.lastName}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:separator />
+
+                    <p:commandButton value="Add new"
+                                     type="button"
+                                     onclick="PF('addNewBook').show();"/>
+                </p:fieldset>
+
+                <br/>
+
+                <p:fieldset legend="Lend a book" toggleable="true" style="width: 50%">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:selectOneMenu value="#{requestControllerMyBatis.selectedBook}" converter="omnifaces.SelectItemsConverter" id="bookListId" style="width:150px">
+                            <f:selectItem itemLabel="Select book" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{requestControllerMyBatis.allBooks}" var="book" itemLabel="#{book.title}" itemValue="#{book}" />
+                        </h:selectOneMenu>
+
+                        <h:selectOneMenu value="#{requestControllerMyBatis.selectedStudent}" converter="omnifaces.SelectItemsConverter" id="studentListId" style="width:150px">
+                            <f:selectItem itemLabel="Select student" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{requestControllerMyBatis.allStudents}" var="student" itemLabel="#{student.firstName} #{student.lastName}" itemValue="#{student}"/>
+                        </h:selectOneMenu>
+
+                    </h:panelGrid>
+                    <p:separator />
+                    <p:commandButton value="Lend"
+                                     actionListener="#{requestControllerMyBatis.lendBook()}"
+                                     ajax="false"
+                                     update="booksDataTableId"/>
+                </p:fieldset>
+
+                <br/>
+
+                <p:commandButton value="Return to main page" action="index?faces-redirect=true" />
+
+                <!-- POP-UPS -->
+                <p:dialog header="Add new student" widgetVar="addNewStudent" resizable="false">
+                    <h:panelGrid columns="1">
+                        <p:outputLabel for="firstName" value="First name"/>
+                        <p:inputText id="firstName" value="#{requestControllerMyBatis.student.firstName}"/>
+
+                        <p:outputLabel for="lastName" value="Last name"/>
+                        <p:inputText id="lastName" value="#{requestControllerMyBatis.student.lastName}"/>
+
+                        <p:commandButton value="Add"
+                                         actionListener="#{requestControllerMyBatis.createStudent()}"
+                                         oncomplete="PF('addNewStudent').hide();"/>
+                    </h:panelGrid>
+                    <p:ajax event="close" update="studentsDataTableId studentListId"/>
+                </p:dialog>
+
+                <p:dialog header="Add new book" widgetVar="addNewBook" resizable="false">
+                    <h:panelGrid columns="1">
+
+                        <p:outputLabel for="title" value="Title"/>
+                        <p:inputText id="title" value="#{requestControllerMyBatis.book.title}"/>
+
+                        <p:outputLabel for="description" value="Description"/>
+                        <p:inputTextarea id="description" rows="10" cols="50" counter="display" maxlength="255" value="#{requestControllerMyBatis.book.description}"/>
+                        <h:outputText id="display" />
+
+                        <p:commandButton value="Add"
+                                         actionListener="#{requestControllerMyBatis.createBook()}"
+                                         oncomplete="PF('addNewBook').hide();"/>
+                    </h:panelGrid>
+                    <p:ajax event="close" update="booksDataTableId bookListId"/>
+                </p:dialog>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

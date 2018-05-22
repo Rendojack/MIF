@@ -1,0 +1,44 @@
+package com.jpa.resources;
+
+import com.business.RescueOrAsync;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Disposes;
+import javax.enterprise.inject.Produces;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.SynchronizationType;
+
+@ApplicationScoped
+public class JPAResources {
+
+    @PersistenceUnit(unitName = "UNIT")
+    private EntityManagerFactory emf;
+
+    @Produces
+    @Default
+    @RequestScoped
+    private EntityManager createJTAEntityManager() {
+        return emf.createEntityManager(SynchronizationType.SYNCHRONIZED);
+    }
+
+    @Produces
+    @RescueOrAsync
+    @Dependent
+    private EntityManager createJTATransactionalEntityManager() { return emf.createEntityManager(SynchronizationType.SYNCHRONIZED); }
+
+    private void closeDefaultEntityManager(@Disposes @Default EntityManager em)
+    {
+        //System.out.println("Closing entity manager...");
+        em.close();
+    }
+    private void closeResqueEntityManager(@Disposes @RescueOrAsync EntityManager em)
+    {
+        //System.out.println("Closing entity manager...");
+        em.close();
+    }
+}

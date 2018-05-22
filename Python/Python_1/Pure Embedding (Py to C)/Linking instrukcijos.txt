@@ -1,0 +1,8 @@
+C++ console application, .cpp renamint i .c
+
+VS projecte pakeist SDK versija i 10586 is 16299 (right click > retarget project)
+Pakeist configuracija i x86 (virsuj juostoj)
+Pakeist buildinima is Debug i Release
+Sudeti pythono libs ir include is python 32bit
+python36.dll nukopijuoti i release kataloga, kur buildinasi projectas
+cmd: program.exe scriptName funcName arguments

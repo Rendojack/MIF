@@ -1,0 +1,3 @@
+Empty python console application
+Environment pasikeist is python36 i anaconda5, kad eitu importint scipy lib ir pns. 
+Arba susirasyt reikiamus packages i python36 paciam

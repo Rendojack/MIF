@@ -1,0 +1,19 @@
+<?mybatis version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.dao.AuthorBookMapper">
+
+    <resultMap id="AuthorBookMap" type="Author">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="AUTHOR_ID" jdbcType="VARCHAR" property="authorId"/>
+        <result column="BOOK_ID" jdbcType="VARCHAR" property="bookId"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="AuthorBookMap">
+        SELECT
+        ID,
+        AUTHOR_ID,
+        BOOK_ID
+        FROM AUTHOR_BOOK
+    </select>
+
+</mapper>

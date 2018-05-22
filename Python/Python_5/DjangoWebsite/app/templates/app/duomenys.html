@@ -1,0 +1,187 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+<div class="container">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <br />
+        <table class="lentele">
+            <tr>
+                <th colspan="12">
+                    <div class="jumbotron">PVM saskaitos</div>
+                </th>
+            </tr>
+            <tr>
+                <td><b>Serija</b></td>
+                <td><b>Nr</b></td>
+                <td><b>Data</b></td>
+
+                <td><b>Pirkejas</b></td>
+                <td><b>Pirkejo adresas</b></td>
+                <td><b>Pirkejo asmens kodas</b></td>
+                <td><b>Pirkejo PVM moketojo kodas</b></td>
+
+                <td><b>Pardavejas</b></td>
+                <td><b>Pardavejo adresas</b></td>
+                <td><b>Pardavejo asmens kodas</b></td>
+                <td><b>Pardavejo PVM moketojo kodas</b></td>
+
+            </tr>
+            {% for PVM_saskaita in PVM_saskaitos %}
+            <tr>
+                <td>{{PVM_saskaita.serija}}</td>
+                <td>{{PVM_saskaita.nr}}</td>
+                <td>{{PVM_saskaita.data}}</td>
+
+                <td>{{PVM_saskaita.pirkejas}}</td>
+                <td>{{PVM_saskaita.pirkejo_adresas}}</td>
+                <td>{{PVM_saskaita.pirkejo_asmens_kodas}}</td>
+                <td>{{PVM_saskaita.pirkejo_PVM_moketojo_kodas}}</td>
+
+                <td>{{PVM_saskaita.pardavejas}}</td>
+                <td>{{PVM_saskaita.pardavejo_adresas}}</td>
+                <td>{{PVM_saskaita.pardavejo_asmens_kodas}}</td>
+                <td>{{PVM_saskaita.pardavejo_PVM_moketojo_kodas}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br />
+        <table class="lentele">
+            <tr>
+                <th colspan="12">
+                    <div class="jumbotron">PVM irasai</div>
+                </th>
+            </tr>
+            <tr>
+                <td><b>Iraso nr.</b></td>
+                <td><b>Prekes pavadinimas</b></td>
+                <td><b>Matavimo vnt.</b></td>
+                <td><b>Kiekis</b></td>
+                <td><b>Vnt. kaina be PVM</b></td>
+                <td><b>PVM tarifas</b></td>
+                <td><b>Suma be PVM</b></td>
+                <td><b>PVM suma</b></td>
+                <td><b>Bendra suma</b></td>
+                <td><b>PVM saskaita, kuriai priklauso irasas</b></td>
+            </tr>
+            {% for PVM_irasas in PVM_irasai %}
+            <tr> 
+                <td>{{PVM_irasas.iraso_nr}}</td>
+                <td>{{PVM_irasas.prekes_pavadinimas}}</td>
+                <td>{{PVM_irasas.matavimo_vnt}}</td>
+                <td>{{PVM_irasas.kiekis}}</td>
+                <td>{{PVM_irasas.vnt_kaina_be_PVM}}</td>
+                <td>{{PVM_irasas.PVM_tarifas}}</td>
+                <td>{{PVM_irasas.suma_be_PVM}}</td>
+                <td>{{PVM_irasas.PVM_suma}}</td>
+                <td>{{PVM_irasas.suma_viso}}</td>
+                <td>{{PVM_irasas.PVM_saskaita}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br />
+        {% if request.user.userprofile.pareigos == 'ATSAKINGAS ASMUO' or request.user.userprofile.pareigos == 'ADMIN' %}
+        <table>
+            <tr>
+                <th>
+                    <div class="jumbotron">PVM saskaitos</div>
+                </th>
+                <th>
+                    <div class="jumbotron">PVM irasai</div>
+                </th>
+            </tr>
+            <tr>
+                <td><p>{{sask_radio_form.selections}}</p></td>
+                <td><p>{{irasas_radio_form.selections}}</p></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class = "btn-wrapper">
+                        <p><button type="submit" name="btn_sask_del">Istrinti PVM saskaita</button></p>
+                    </div>
+                </td>
+                <td>
+                    <div class = "btn-wrapper">
+                        <p><button type="submit" name="btn_irasas_del">Istrinti irasa</button></p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        {% endif %}
+        <br />
+        <table class="lentele">
+            <tr>
+                <th colspan="12">
+                    <div class="jumbotron">Nurasymo aktai</div>
+                </th>
+            </tr>
+            <tr>
+                <td><b>Nr.</b></td>
+                <td><b>Data</b></td>
+                <td><b>Nurasomu mat. vertybiu suma su PVM</b></td>
+                <td><b>Ar pilnai uzpildyta?</b></td>
+            </tr>
+            {% for nurasymo_aktas in nurasymo_aktai %}
+            <tr> 
+                <td>{{nurasymo_aktas.nr}}</td>
+                <td>{{nurasymo_aktas.data}}</td>
+                <td>{{nurasymo_aktas.viso_suma}}</td>
+                <td>{{nurasymo_aktas.is_submited}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br />
+        <table class="lentele">
+            <tr>
+                <th colspan="12">
+                    <div class="jumbotron">Nurasymo aktu irasai</div>
+                </th>
+            </tr>
+            <tr>
+                <td><b>Mat. vertybes pavadinimas</b></td>
+                <td><b>Mato vnt.</b></td>
+                <td><b>Kiekis</b></td>
+                <td><b>Kaina</b></td>
+                <td><b>Suma su PVM</b></td>
+                <td><b>Panaudojimo tikslas</b></td>
+                <td><b>Nurasymo akto nr., kuriam priklauso</b></td>
+                <td><b>PVM iraso nr.</b></td>
+            </tr>
+            {% for nurasymo_irasas in nurasymo_irasai %}
+            <tr> 
+                <td>{{nurasymo_irasas.mat_vertybes_pav}}</td>
+                <td>{{nurasymo_irasas.mato_vnt}}</td>
+                <td>{{nurasymo_irasas.kiekis}}</td>
+                <td>{{nurasymo_irasas.kaina}}</td>
+                <td>{{nurasymo_irasas.suma_su_PVM}}</td>
+                <td>{{nurasymo_irasas.panaudojimo_tikslas}}</td>
+                <td>{{nurasymo_irasas.nurasymo_aktas}}</td>
+                <td>{{nurasymo_irasas.PVM_iraso_pk}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br />
+        {% if request.user.userprofile.pareigos == 'ATSAKINGAS ASMUO' or request.user.userprofile.pareigos == 'ADMIN' %}
+        <table>
+            <tr>
+                <th>
+                    <div class="jumbotron">Nurasymo aktai</div>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>{{nurasymo_aktai_radio_form.selections}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class = "btn-wrapper">
+                        <p><button type="submit" name="btn_nurasymo_aktas_del">Istrinti nurasymo akta</button></p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

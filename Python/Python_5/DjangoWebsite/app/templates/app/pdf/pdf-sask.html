@@ -1,0 +1,146 @@
+﻿{% block content %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PVM s.f.</title>
+        <!-- pagal xhtml2pdf dokumentacija, rekomenduoja nenaudoti external .css failu -->
+        <style type="text/css"> 
+            .table {
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 5px;
+                background-color: #fff;
+            }
+
+            .table th, .table td {
+                padding-bottom: 1px;
+                padding-top: 1px;
+                vertical-align: top;
+                border-top: 1px solid #000;
+                text-align: left;
+            }
+
+            .table thead th {
+                vertical-align: bottom;
+                border-bottom: 2px solid #000;
+            }
+
+            .table tbody + tbody {
+                border-top: 2px solid #000;
+            }
+
+            .table .table {
+                background-color: #fff;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            .text-align-right {
+                text-align: right;
+            }
+
+            .text-align-left {
+                text-align: left;
+            }
+
+            .text-align-center {
+                text-align: center;
+            }
+
+            ul {
+                list-style-type: none;
+            }
+
+            p {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <form method="post" novalidate>
+                <h1>PVM Saskaita-faktura</h1>
+                <p>Serija {{PVM_sask.serija}} Nr. {{PVM_sask.nr}}<br />{{PVM_sask.data|date:"Y-m-d"}}</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th><h1>Pardavejas:</h1></th>
+                            <th><h1>Pirkejas:</h1></th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-align-center">
+                        <tr>
+                            <td>{{PVM_sask.pardavejas}}</td>
+                            <td>{{PVM_sask.pirkejas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{PVM_sask.pardavejo_adresas}}</td>
+                            <td>{{PVM_sask.pirkejo_adresas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{PVM_sask.pardavejo_asmens_kodas}}</td>
+                            <td>{{PVM_sask.pirkejo_asmens_kodas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{PVM_sask.pardavejo_PVM_moketojo_kodas}}</td>
+                            <td>{{PVM_sask.pirkejo_PVM_moketojo_kodas}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th><b>Eil.nr.</b></th>
+                            <th><b>Pavadinimas</b></th>
+                            <th><b>Mato vnt.</b></th>
+                            <th><b>Kiekis</b></th>
+                            <th><b>Kaina(be PVM)</b></th>
+                            <th><b>Suma(be PVM)</b></th>
+                            <th><b>PVM tarifas(%)</b></th>
+                            <th><b>PVM suma</b></th>
+                            <th><b>Suma</b></th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        {% for PVM_irasas in PVM_irasai %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{PVM_irasas.prekes_pavadinimas}}</td>
+                            <td>{{PVM_irasas.matavimo_vnt}}</td>
+                            <td>{{PVM_irasas.kiekis}}</td>
+                            <td>{{PVM_irasas.vnt_kaina_be_PVM}}</td>
+                            <td>{{PVM_irasas.suma_be_PVM}}</td>
+                            <td>{{PVM_irasas.PVM_tarifas}}</td>
+                            <td>{{PVM_irasas.PVM_suma}}</td>
+                            <td>{{PVM_irasas.suma_viso}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-align-right"><b>Is viso: </b></td>
+                            <td>{{prekiu_suma_viso}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <p class="text-align-left">
+                    Saskaita israse: {{PVM_sask.israses_asmuo.userprofile.vardas}}
+                    {{PVM_sask.israses_asmuo.userprofile.pavarde}}
+                </p>
+            </form>
+        </div>
+    </body>
+</html>
+{% endblock %}

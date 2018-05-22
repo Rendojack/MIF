@@ -1,0 +1,12 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+<br />
+<h1><b>Prisijungimo vardas</b> {{user.username}}</h1>
+<br />
+<h1><b>Vardas</b> {{user_profile.vardas}}</h1>
+<h1><b>Pavarde</b> {{user_profile.pavarde}}</h1>
+<h1><b>Darbo istaiga</b> {{user_profile.darbo_istaiga}} </h1>
+<h1><b>Pareigos</b> {{user_profile.pareigos}}</h1>
+
+{% endblock %}

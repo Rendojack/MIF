@@ -1,0 +1,18 @@
+'Python extension module' project, prie C++ templates
+
+Visual studios:
+	project>properties
+		Configuration: All Configuration
+		Platform: Win32
+		Extension: .pyd
+
+		VC++ Directories nustatyt 
+			Include Directories(Python36-32\include) ir 
+			Library directories(Python36-32\libs)
+	retarget solution to 10.0.10586.0
+
+CMD:
+	Nueiti, kur programos .c failas
+	set PYTHONPATH = kur subuildintas .pyd modulis
+	...\Python36-32\python -c "import modulio_pavadinimas"
+	pasileisti python ir >>> import modulio_pavadinimas

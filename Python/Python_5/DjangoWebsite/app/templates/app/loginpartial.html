@@ -1,0 +1,17 @@
+{% if user.is_authenticated %}
+<form id="logoutForm" action="/logout" method="post" class="navbar-right">
+    {% csrf_token %}
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'account' %}"><span class="glyphicon glyphicon-user"></span></a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Atsijungti</a></li>
+    </ul>
+
+</form>
+
+{% else %}
+
+<ul class="nav navbar-nav navbar-right">
+    <li><a href="{% url 'login' %}">Prisijungti</a></li>
+</ul>
+
+{% endif %}

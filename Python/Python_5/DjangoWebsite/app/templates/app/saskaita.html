@@ -1,0 +1,141 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+<div class="container">
+    <form method="post" novalidate>
+        {% csrf_token %}    
+        <table>
+            <tr>
+                <th>
+                    <table>
+                        <tr> 
+                            <th colspan="2">
+                                <div class="jumbotron">PVM saskaitos pildymas</div>
+                            </th>
+                        </tr>
+                        <tr> 
+                            <td>{{form.serija.label}} (unikali)</td>
+                            <td>{{form.serija}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.nr.label}}</td>
+                            <td>{{form.nr}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.data.label}}</td>
+                            <td>{{form.data}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>{{form.pirkejas.label}}</td>
+                            <td>{{form.pirkejas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.pirkejo_adresas.label}}</td>
+                            <td>{{form.pirkejo_adresas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.pirkejo_asmens_kodas.label}}</td>
+                            <td>{{form.pirkejo_asmens_kodas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.pirkejo_PVM_moketojo_kodas.label}}</td>
+                            <td>{{form.pirkejo_PVM_moketojo_kodas}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>{{form.pardavejas.label}}</td>
+                            <td>{{form.pardavejas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.pardavejo_adresas.label}}</td>
+                            <td>{{form.pardavejo_adresas}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.pardavejo_asmens_kodas.label}}</td>
+                            <td>{{form.pardavejo_asmens_kodas}}</td>
+                        </tr>
+                        <tr>
+
+                            <td>{{form.pardavejo_PVM_moketojo_kodas.label}}</td>
+                            <td>{{form.pardavejo_PVM_moketojo_kodas}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class = "btn-wrapper">
+                                    <button type="submit" name="btn_forma">
+                                        Sukurti nauja PVM saskaita
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                        </tr>
+                    </table>
+                </th>
+                <th class="top">
+                    <table>
+                        <tr> 
+                            <th colspan="2">
+                                <div class="jumbotron">PVM Irasu tvarkymas</div>
+                            </th>
+                        </tr>
+                        <tr> 
+                            <td>{{form_irasas.prekes_pavadinimas.label}}</td>
+                            <td>{{form_irasas.prekes_pavadinimas}}</td>
+                        </tr>
+                        <tr> 
+                            <td>{{form_irasas.matavimo_vnt.label}}</td>
+                            <td>{{form_irasas.matavimo_vnt}}</td>
+                        </tr>
+                        <tr> 
+                            <td>{{form_irasas.vnt_kaina_be_PVM.label}}</td>
+                            <td>{{form_irasas.vnt_kaina_be_PVM}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form_irasas.kiekis.label}}</td>
+                            <td>{{form_irasas.kiekis}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>{{form_irasas.PVM_tarifas.label}}</td>
+                            <td>{{form_irasas.PVM_tarifas}}</td>
+                        </tr>
+                        <tr>
+                            <td>PVM saskaita, kuriai priklauso irasas</td>
+                            <td>{{form_irasas.PVM_saskaita}}</td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class = "btn-wrapper">
+                                    <button type="submit" name="btn_irasas">
+                                        Naujas irasas
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}

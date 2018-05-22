@@ -1,0 +1,8 @@
+python manage.py flush
+python manage.py createsuperuser
+
+tuomet per /admin susikurti papildomas anketas su atitinkamomis pareigomis
+
+modeliu update:
+python manage.py makemigrations
+python manage.py migrate

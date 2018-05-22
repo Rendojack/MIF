@@ -1,0 +1,2 @@
+Environment > install python package
+Installint mysql-connector-python

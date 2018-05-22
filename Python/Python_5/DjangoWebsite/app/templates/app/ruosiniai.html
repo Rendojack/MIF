@@ -1,0 +1,78 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+<div class="container">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td colspan="12">
+                    <div class="jumbotron">PDF generavimas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><b>Nurasymo aktai</b></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% for choice in nurasymo_akto_pasirinkimo_form.selection %}         
+                        <div class="form-group" align="center">
+                            {{ choice.tag }}
+                            <b>{{ choice.choice_label }}</b>
+                        </div>  
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><b>{{nurasymo_akto_pasirinkimo_form.isakymo_nr.label}}</b></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>{{nurasymo_akto_pasirinkimo_form.isakymo_nr}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <button type="submit" name="btn_generuoti_nurasyma">
+                            Pasirasyti dokumenta ir sugeneruoti PDF
+                        </button>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td><p><b>PVM saskaitos</b></p></td>
+            </tr>
+            <tr>
+                <td>
+                    {% for choice in PVM_sask_pasirinkimo_form_radio.saskaitos %}         
+                        <div class="form-group" align="center">
+                            {{ choice.tag }}
+                            <b>{{ choice.choice_label }}</b>
+                        </div>  
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <button type="submit" name="btn_generuoti_PVM">
+                            Sugeneruoti PDF
+                        </button>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<?mybatis version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.dao.BookMapper">
+
+    <resultMap id="BookMap" type="Book">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="TITLE" jdbcType="VARCHAR" property="title"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <result column="STUDENT_ID" jdbcType="INTEGER" property="studentId"/>
+        <association property="student" resultMap="com.mybatis.dao.StudentMapper.StudentMap" columnPrefix="STUDENT_"/>
+        <collection property="authorList" javaType="ArrayList" column="ID" ofType="Author" select="selectAuthorsForBook"/>
+    </resultMap>
+
+    <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="Book" useGeneratedKeys="true">
+        INSERT INTO BOOK (TITLE, DESCRIPTION, STUDENT_ID)
+        VALUES (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{studentId,jdbcType=INTEGER})
+    </insert>
+
+    <update id="update" parameterType="Book">
+        UPDATE BOOK
+        SET
+          TITLE = #{title,jdbcType=VARCHAR},
+          DESCRIPTION = #{description,jdbcType=VARCHAR},
+          STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectAll" resultMap="BookMap">
+        SELECT
+            b.ID,
+            b.TITLE,
+            b.DESCRIPTION,
+            b.STUDENT_ID,
+            s.FIRST_NAME as STUDENT_FIRST_NAME,
+            s.LAST_NAME as STUDENT_LAST_NAME
+        FROM BOOK b
+            LEFT JOIN STUDENT s ON b.STUDENT_ID = s.ID
+    </select>
+
+    <select id="selectAuthorsForBook" resultType="Author">
+        SELECT
+          a.ID,
+          a.FIRST_NAME,
+          a.LAST_NAME
+        FROM AUTHOR a
+          JOIN AUTHOR_BOOK ab on a.ID = ab.AUTHOR_ID
+        WHERE ab.BOOK_ID = #{id,jdbcType=INTEGER}
+    </select>
+
+</mapper>

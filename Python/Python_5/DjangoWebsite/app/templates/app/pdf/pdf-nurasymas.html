@@ -1,0 +1,154 @@
+{% block content %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Materialiniu vertybiu nurasymo aktas</title>
+        <!-- pagal xhtml2pdf dokumentacija, rekomenduoja nenaudoti external .css failu -->
+        <style type="text/css"> 
+            .table {
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 5px;
+                background-color: #fff;
+            }
+
+            .table th, .table td {
+                padding-bottom: 1px;
+                padding-top: 1px;
+                vertical-align: top;
+                border-top: 1px solid #000;
+                text-align: left;
+            }
+
+            .table thead th {
+                vertical-align: bottom;
+                border-bottom: 2px solid #000;
+            }
+
+            .table tbody + tbody {
+                border-top: 2px solid #000;
+            }
+
+            .table .table {
+                background-color: #fff;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            .text-align-right {
+                text-align: right;
+            }
+
+            .text-align-left {
+                text-align: left;
+            }
+
+            .text-align-center {
+                text-align: center;
+            }
+
+            ul {
+                list-style-type: none;
+            }
+
+            p {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <form method="post" novalidate>
+                <p class="text-align-right">
+                    Patvirtinta {{request.user.userprofile.darbo_istaiga}} direktoriaus,
+                    {% now "Y-m-d" %} isakymu Nr. {{isakymo_nr}}
+                </p>
+                <ul class="text-align-right">
+                    <li><b>TVIRTINU:</b></li>
+                    <li>{{direktorius.userprofile.darbo_istaiga}}</li>
+                    <li>{{direktorius.userprofile.vardas}} {{direktorius.userprofile.pavarde}}</li>
+                    <li>{% now "Y-m-d" %}</li>
+                </ul>
+                <p>{{direktorius.userprofile.darbo_istaiga}}</p>
+                <h1>MATERIALINIU VERTYBIU NURASYMO A K T A S</h1>
+                <p>Nr. {{nurasymo_aktas_rodyti.nr}}, {{nurasymo_aktas_rodyti.data|date:"Y-m-d"}}</p>
+
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th><b>Eil.nr.</b></th>
+                            <th><b>Mat. vertybes pavadinimas</b></th>
+                            <th><b>Mato vnt.</b></th>
+                            <th><b>Kiekis</b></th>
+                            <th><b>Kaina</b></th>
+                            <th><b>Suma su PVM</b></th>
+                            <th><b>Panaudojimo tikslas</b></th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        {% for nurasymo_irasas in nurasymo_irasai %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{nurasymo_irasas.mat_vertybes_pav}}</td>
+                            <td>{{nurasymo_irasas.mato_vnt}}</td>
+                            <td>{{nurasymo_irasas.kiekis}}</td>
+                            <td>{{nurasymo_irasas.kaina}}</td>
+                            <td>{{nurasymo_irasas.suma_su_PVM}}</td>
+                            <td>{{nurasymo_irasas.panaudojimo_tikslas}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td class="text-align-right"><b>Is viso: </b></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{nurasymo_aktas_rodyti.viso_suma}}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <p class="text-align-left"><b>Pagal pirkimo dokumentus:</b></p>
+                {% for paruosta_PVM_sask in susijusios_PVM_sask %}
+                <p class="text-align-left">
+                    {{paruosta_PVM_sask.pardavejas}} PVM s.f. {{paruosta_PVM_sask.serija}} Nr. {{paruosta_PVM_sask.nr}},
+                    {{paruosta_PVM_sask.data|date:"Y-m-d"}}
+                </p>
+                {% endfor %}
+                <br />
+                <table>
+                    <tr>
+                        <td>Komisijos pirmininkas</td>
+                        <td>---------------------</td>
+                        <td>
+                            {{komisijos_pirmininkas.userprofile.vardas}} {{komisijos_pirmininkas.userprofile.pavarde}}
+                        </td>
+                    </tr>
+                    {% for komisijos_narys in komisijos_nariai %}
+                    <tr>
+                        <td></td>
+                        <td>---------------------</td>
+                        <td>{{komisijos_narys.userprofile.vardas}} {{komisijos_narys.userprofile.pavarde}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Atsakingas asmuo</td>
+                        <td>---------------------</td>
+                        <td>
+                            {{nurasymo_aktas_rodyti.atsakingas_asmuo.userprofile.vardas}}
+                            {{nurasymo_aktas_rodyti.atsakingas_asmuo.userprofile.pavarde}}
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>
+{% endblock %}

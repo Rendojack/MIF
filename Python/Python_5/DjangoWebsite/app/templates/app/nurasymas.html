@@ -1,0 +1,141 @@
+{% extends "app/layout.html" %}
+{% block content %}
+
+<div class="container">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <table>
+            <tr>
+                {% if request.user.userprofile.pareigos == 'ATSAKINGAS ASMUO' or request.user.userprofile.pareigos == 'ADMIN'%}
+                <th class="top">
+                    {% if show_btn_kurti_nurasymo_akta %}
+                    <table>
+                        <tr> 
+                            <th colspan="2">
+                                <div class="jumbotron">Nurasymo akto kurimas</div>
+                            </th>
+                        </tr>
+                        <tr> 
+                            <td>{{nurasymo_aktas_form.data.label}}</td>
+                            <td>{{nurasymo_aktas_form.data}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{nurasymo_aktas_form.nr.label}}</td>
+                            <td>{{nurasymo_aktas_form.nr}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{nurasymo_aktas_form.PVM_saskaitos.label}}</td>
+                            <td>{{nurasymo_aktas_form.PVM_saskaitos}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class = "btn-wrapper">
+                                    <button type="submit" name="btn_kurti_nurasymo_akta">
+                                        Sukurti nauja nurasymo akta
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                        </tr>
+                    </table>
+                    {% endif %}
+                </th>
+                {% endif %}
+
+                {% if request.user.userprofile.pareigos == 'KOMISIJOS NARYS' or request.user.userprofile.pareigos == 'KOMISIJOS NARYS PIRMININKAS' or request.user.userprofile.pareigos == 'ADMIN' %}
+                <td class="top">
+                    {% if show_btn_pasirinkti_nurasymo_akta %}
+                    <table>
+                        <tr> 
+                            <th>
+                                <div class="jumbotron">Nurasymo aktai</div>
+                            </th>
+                        </tr>
+                        <tr> 
+                            <td>
+                                {% for choice in nurasymo_akto_pasirinkimo_form.selection %}         
+                                    <div class="form-group" align="center">
+                                        {{ choice.tag }}
+                                        <b>{{ choice.choice_label }}</b>
+                                    </div>  
+                                {% endfor %}
+                            </td>
+                        <tr>
+                            <td>
+                                <p>
+                                    <button type="submit" name="btn_pasirinkti_nurasymo_akta">
+                                        PILDYTI/REDAGUOTI nurasymo akto irasus
+                                    </button>
+                                </p>
+                            </td>
+                        </tr>
+                        {% if request.user.userprofile.pareigos == 'KOMISIJOS NARYS PIRMININKAS' or request.user.userprofile.pareigos == 'ADMIN'%}
+                        <tr>
+                            <td>
+                                <p>
+                                    <button type="submit" name="btn_pateikti_nurasymo_akta">
+                                        UZBAIGTI ir PATEIKTI nurasymo akta
+                                    </button>
+                                </p>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+        </table>
+
+        {% if show_btn_pasirinkti_PVM_irasus %}
+        <table>
+            <tr> 
+                <td>
+                    <div class="jumbotron">Nurasomi produktai pagal pasirinktas PVM s.f.</div>
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                    {% for choice in PVM_irasu_pasirinkimo_form.PVM_irasai %}         
+                        <div class="form-group" align="center">
+                            {{ choice.tag }}
+                            <b>{{ choice.choice_label }}</b>
+                        </div>  
+                    {% endfor %}
+                </td>
+            <tr>
+                <td>
+                    <p>
+                        <button type="submit" name="btn_pasirinkti_PVM_irasus">
+                            Pasirinkti nurasomus produktus
+                        </button>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        {% endif %}
+
+        {% if show_btn_nurasyti %}
+        {{ formset.management_form }}
+        {% for form in formset.forms %}
+            <h1>Nurasymo aktas {{form.nurasymo_aktas.value}} {{form.nurasymo_aktas.as_hidden}}</h1>
+            <h1>PVM iraso nr. {{form.PVM_iraso_pk.value}} {{form.PVM_iraso_pk.as_hidden}}</h1>
+
+            <h1>Mat. vertybe {{form.mat_vertybes_pav.value}} {{form.mat_vertybes_pav.as_hidden}}</h1>
+            <h1>Vnt. {{form.mato_vnt.value}} {{form.mato_vnt.as_hidden}}</h1>
+            <h1>Vnt. kaina {{form.kaina.value}} {{form.kaina.as_hidden}}</h1>
+            <h1>Max. kiekis {{form.max_kiekis.value}} {{form.max_kiekis.as_hidden}}</h1>
+            <h1>Nurasomas kiekis {{form.kiekis}}</h1>
+            <h1>Panaudojimo tikslas {{form.panaudojimo_tikslas}}</h1>
+            <br />
+        {% endfor %}
+        <p><button type="submit" name="btn_nurasyti">Nurasyti materialines vertybes</button></p>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
